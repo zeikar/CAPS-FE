@@ -1,0 +1,14 @@
+{
+  "name": "caps-vuejs",
+  "version": "1.0.0",
+  "description": "CAPS-Vue.JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zeikar Park",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.5.17"
+  }
+}
