@@ -8,10 +8,7 @@
                 <router-link to="/board" class="nav-link">게시판</router-link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 3</a>
+                <router-link to="/login" class="nav-link">로그인</router-link>
             </li>
         </ul>
     </div>
@@ -20,7 +17,6 @@
 
 <script>
 export default {
-    name: "Board",
-    props: {}
+    name: "Board"
 }
 </script>

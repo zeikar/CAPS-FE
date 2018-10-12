@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Board from '../components/Board.vue'
 import Home from '../components/Home.vue'
+import PageNotFound from '../components/PageNotFound.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
             path: '/board',
             name: 'Board',
             component: Board
+        },
+        {
+            path: "*",
+            name: 'PageNotFound',
+            component: PageNotFound
         }
     ]
 })
