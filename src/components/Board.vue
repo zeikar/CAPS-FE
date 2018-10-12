@@ -3,26 +3,18 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
+                <th>No.</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
+            <tr v-for="(board, index) in boards" v-bind:key="board._id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ board.board_title }}</td>
+                <td>{{ board.user.user_name }}</td>
+                <td>{{ board.updated_at }}</td>
             </tr>
         </tbody>
     </table>
@@ -30,10 +22,17 @@
 </template>
 
 <script>
+import {
+    mapState
+} from "vuex";
+
 export default {
     name: "Board",
-    props: {}
-}
+    mounted() {
+        this.$store.commit('fetchBoards');
+    },
+    computed: mapState(['boards'])
+};
 </script>
 
 <style>
