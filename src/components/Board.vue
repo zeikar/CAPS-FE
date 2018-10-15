@@ -22,16 +22,16 @@
 </template>
 
 <script>
-import {
-    mapState
-} from "vuex";
-
 export default {
-    name: "Board",
+    name: 'Board',
     mounted() {
-        this.$store.commit('fetchBoards');
+        this.$store.dispatch('fetchBoards');
     },
-    computed: mapState(['boards'])
+    computed: {
+        boards() {
+            return this.$store.getters.getBoards;
+        }
+    }
 };
 </script>
 

@@ -34,14 +34,19 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store
-        .dispatch('LOGIN', {
+      this.$store.dispatch('LOGIN', {
           user_id: this.user_id,
           user_password: this.user_password
         })
         .then(() => {
             // 로그인 성공
-            
+            if (this.$store.getters.isLogined) {
+                this.$router.push('/');
+            }
+            // 로그인 실패
+            else {
+                console.log('실패');                
+            }
         })
         .catch(error => console.log(error));
     }

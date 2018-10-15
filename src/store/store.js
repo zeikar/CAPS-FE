@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
 Vue.use(Vuex);
 
@@ -12,19 +13,19 @@ export default new Vuex.Store({
         boards: []
     },
     getters: {
-        getBoards: state => {
+        getBoards(state) {
             return state.boards;
+        },
+        isLogined(state) {
+            return state.accessToken != null && state.accessToken != undefined;
+        },
+        getUserData(state) {
+            return jwt.decode(state.accessToken);
         }
     },
     mutations: {
-        fetchBoards(state) {
-            axios.get('http://localhost:3000/boards')
-                .then(response => {
-                    state.boards = response.data;
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+        fetchBoards(state, boardsData) {
+            state.boards = boardsData;
         },
         LOGIN(state, accessToken) {
             state.accessToken = accessToken;
@@ -34,10 +35,22 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        fetchBoards(state) {
+            axios.get('http://localhost:3000/boards')
+            .then(response => {
+                state.commit('fetchBoards', response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
         LOGIN(state, loginData) {
             return axios.post('http://localhost:3000/users/login', loginData)
                 .then((response) => {
                     state.commit('LOGIN', response.headers['access-token']);
+                })
+                .catch(error => {
+                    console.log(error);
                 });
         },
         LOGOUT(state) {
