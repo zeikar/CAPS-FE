@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import Board from '../components/Board.vue'
-import Home from '../components/Home.vue'
-import Login from '../components/Login.vue'
-import PageNotFound from '../components/PageNotFound.vue'
+import Board from '../components/Board.vue';
+import Home from '../components/Home.vue';
+import Login from '../components/Login.vue';
+import PageNotFound from '../components/PageNotFound.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     mode: 'history',
@@ -26,9 +26,9 @@ export default new Router({
             component: Login
         },
         {
-            path: "*",
+            path: '*',
             name: 'PageNotFound',
             component: PageNotFound
         }
     ]
-})
+});

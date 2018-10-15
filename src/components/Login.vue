@@ -25,19 +25,19 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
-      user_id: "",
-      user_password: ""
+      user_id: '',
+      user_password: ''
     };
   },
   methods: {
     onSubmit() {
-      console.log(this.user_id + " " + this.user_password);
+      console.log(this.user_id + ' ' + this.user_password);
 
       this.$store
-        .dispatch("LOGIN", {
+        .dispatch('LOGIN', {
           user_id: this.user_id,
           user_password: this.user_password
         })

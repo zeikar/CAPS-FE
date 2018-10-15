@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     getters: {
         getBoards: state => {
-            return state.boards
+            return state.boards;
         }
     },
     mutations: {
@@ -37,12 +37,12 @@ export default new Vuex.Store({
         LOGIN(state, loginData) {
             return axios.post('http://localhost:3000/users/login', loginData)
                 .then((response) => {
-                    console.log(response.headers['x-auth']);
-                    state.commit('LOGIN', response.headers['x-auth']);
-                })
+                    console.log(response.headers['access-token']);
+                    state.commit('LOGIN', response.headers['access-token']);
+                });
         },
         LOGOUT(state) {
             state.commit('LOGOUT');
         }
     }
-})
+});
