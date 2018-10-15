@@ -34,12 +34,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.user_id + ' ' + this.user_password);
-
       this.$store
         .dispatch('LOGIN', {
           user_id: this.user_id,
           user_password: this.user_password
+        })
+        .then(() => {
+            // 로그인 성공
+            
         })
         .catch(error => console.log(error));
     }

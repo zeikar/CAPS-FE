@@ -37,7 +37,6 @@ export default new Vuex.Store({
         LOGIN(state, loginData) {
             return axios.post('http://localhost:3000/users/login', loginData)
                 .then((response) => {
-                    console.log(response.headers['access-token']);
                     state.commit('LOGIN', response.headers['access-token']);
                 });
         },
