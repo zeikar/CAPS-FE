@@ -19,7 +19,7 @@
             <input class="form-check-input" type="checkbox" /> Remember me
         </label>
     </div>
-    <button @click="onSubmit(user_id, user_password)" class="btn btn-primary btn-block">로그인</button>
+    <button @click="onSubmit()" class="btn btn-primary btn-block">로그인</button>
 </div>
 </template>
 
@@ -33,13 +33,15 @@ export default {
     };
   },
   methods: {
-    onSubmit(user_id, user_password) {
-        console.log(user_id + ' ' + user_password);
-        
-      /*this.$store
-        .dispatch("LOGIN", user_id, user_password)
-        .then(() => this.redirect())
-        .catch(({ message }) => (this.msg = message));*/
+    onSubmit() {
+      console.log(this.user_id + " " + this.user_password);
+
+      this.$store
+        .dispatch("LOGIN", {
+          user_id: this.user_id,
+          user_password: this.user_password
+        })
+        .catch(error => console.log(error));
     }
   }
 };

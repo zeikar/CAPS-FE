@@ -17,7 +17,7 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        fetchBoards: (state) => {
+        fetchBoards(state) {
             axios.get('http://localhost:3000/boards')
                 .then(response => {
                     state.boards = response.data;
@@ -25,6 +25,24 @@ export default new Vuex.Store({
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        LOGIN(state, accessToken) {
+            state.accessToken = accessToken;
+        },
+        LOGOUT(state) {
+            state.accessToken = null;
+        }
+    },
+    actions: {
+        LOGIN(state, loginData) {
+            return axios.post('http://localhost:3000/users/login', loginData)
+                .then((response) => {
+                    console.log(response.headers['x-auth']);
+                    state.commit('LOGIN', response.headers['x-auth']);
+                })
+        },
+        LOGOUT(state) {
+            state.commit('LOGOUT');
         }
     }
 })
