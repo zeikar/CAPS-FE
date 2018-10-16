@@ -1,7 +1,6 @@
 <template>
 <div class="container">
-    <div class="alert alert-warning alert-dismissible fade show">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-warning">
         {{ msg }}
     </div>
 </div>

@@ -1,9 +1,9 @@
 <template>
-<div class="login">    
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 login-main">
-                <AlertMessage v-show="loginMessage != ''" v-bind:msg="loginMessage" />
+<div class="login container">    
+    <div class="row">
+        <div class="col-md-4 login-main">
+            <AlertMessage v-show="loginMessage != ''" v-bind:msg="loginMessage" />
+            <form v-on:submit.prevent="onSubmit">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">ID</span>
@@ -16,13 +16,13 @@
                         <span class="input-group-text">PW</span>
                     </div>
                     <input type="password" v-model="user_password"
-                    class="form-control" id="password" placeholder="비밀번호를 입력하세요" autocomplete="off" required />
+                        class="form-control" id="password" placeholder="비밀번호를 입력하세요" autocomplete="off" required />
                 </div>                
-                <button @click="onSubmit()" :disabled="isLoginProcessing" class="btn btn-primary btn-block">
+                <button type="submit" :disabled="isLoginProcessing" class="btn btn-primary btn-block">
                     <span v-if="isLoginProcessing">로그인 중...</span>
                     <span v-else>로그인</span>
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
