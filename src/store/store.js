@@ -11,6 +11,14 @@ const enhanceAccessToken = () => {
     if (!accessToken) {
         return;
     }
+
+    // expired이면 제거
+    var current_time = Date.now() / 1000;
+    if (jwt.decode(accessToken).exp < current_time) {
+        delete localStorage.accessToken;
+        return;
+    }
+
     axios.defaults.headers.common['Access-Token'] = accessToken;
 };
 enhanceAccessToken();
@@ -20,11 +28,16 @@ export default new Vuex.Store({
         // 로그인 정보
         accessToken: axios.defaults.headers.common['Access-Token'],
         // 게시판 정보
-        boards: []
+        boards: [],
+        // 현재 게시글 정보
+        board: null
     },
     getters: {
         getBoards(state) {
             return state.boards;
+        },
+        getBoard(state) {
+            return state.board;
         },
         isLogined(state) {
             return state.accessToken != null && state.accessToken != undefined;
@@ -36,6 +49,9 @@ export default new Vuex.Store({
     mutations: {
         fetchBoards(state, boardsData) {
             state.boards = boardsData;
+        },
+        fetchBoard(state, boardData) {
+            state.board = boardData;
         },
         LOGIN(state, accessToken) {
             state.accessToken = accessToken;
@@ -57,6 +73,15 @@ export default new Vuex.Store({
             axios.get('http://localhost:3000/boards')
                 .then(response => {
                     state.commit('fetchBoards', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        fetchBoard(state, boardId) {
+            axios.get('http://localhost:3000/boards/view/' + boardId)
+                .then(response => {
+                    state.commit('fetchBoard', response.data);
                 })
                 .catch(error => {
                     console.log(error);

@@ -12,7 +12,9 @@
         <tbody>
             <tr v-for="(board, index) in boards" v-bind:key="board._id">
                 <td>{{ index + 1 }}</td>
-                <td>{{ board.board_title }}</td>
+                <td>
+                    <router-link :to="'/board/view/'+board._id" class="nav-link">{{ board.board_title }}</router-link>                    
+                </td>
                 <td>{{ board.user.user_name }}</td>
                 <td>{{ board.updated_at }}</td>
             </tr>
