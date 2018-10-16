@@ -8,7 +8,14 @@
 
 <script>
 export default {
-    name: "Board",
+    name: 'Board',
     props: {}
-}
+};
 </script>
+
+<style>
+footer {
+    margin-top: 30px;
+    box-shadow: 0px 500px 0px 500px #f8f9fa!important;
+}
+</style>

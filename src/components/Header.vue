@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
+<header class="navbar navbar-expand-sm bg-light navbar-light">
     <div class="container">
         <router-link to="/" class="navbar-brand">CAPS</router-link>
         <!-- Links -->
@@ -13,7 +13,7 @@
             </li>
         </ul>
     </div>
-</nav>
+</header>
 </template>
 
 <script>
@@ -29,3 +29,9 @@ export default {
     }
 };
 </script>
+
+<style>
+header {
+    margin-bottom: 30px;
+}
+</style>
