@@ -16,13 +16,8 @@
                         <span class="input-group-text">PW</span>
                     </div>
                     <input type="password" v-model="user_password"
-                    class="form-control" id="password" placeholder="비밀번호를 입력하세요" autocomplete="off" required autofocus />
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" /> Remember me
-                    </label>
-                </div>
+                    class="form-control" id="password" placeholder="비밀번호를 입력하세요" autocomplete="off" required />
+                </div>                
                 <button @click="onSubmit()" :disabled="isLoginProcessing" class="btn btn-primary btn-block">
                     <span v-if="isLoginProcessing">로그인 중...</span>
                     <span v-else>로그인</span>

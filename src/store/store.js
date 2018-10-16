@@ -5,10 +5,20 @@ import jwt from 'jsonwebtoken';
 
 Vue.use(Vuex);
 
+// 화면 갱신 시 로컬 스토리지에 저장된 토큰을 axios 헤더에 설정
+const enhanceAccessToken = () => {
+    const accessToken = localStorage.accessToken;
+    if (!accessToken) {
+        return;
+    }
+    axios.defaults.headers.common['Access-Token'] = accessToken;
+};
+enhanceAccessToken();
+
 export default new Vuex.Store({
     state: {
         // 로그인 정보
-        accessToken: null,
+        accessToken: axios.defaults.headers.common['Access-Token'],
         // 게시판 정보
         boards: []
     },
@@ -29,20 +39,28 @@ export default new Vuex.Store({
         },
         LOGIN(state, accessToken) {
             state.accessToken = accessToken;
+
+            // 모든 HTTP 요청 헤더에 Authorization 을 추가한다.   
+            axios.defaults.headers.common['Access-Token'] = accessToken;
+
+            // 토큰을 로컬 스토리지에 저장 
+            localStorage.accessToken = accessToken;
         },
         LOGOUT(state) {
+            // 토큰 정보 삭제  
             state.accessToken = null;
+            delete localStorage.accessToken;
         }
     },
     actions: {
         fetchBoards(state) {
             axios.get('http://localhost:3000/boards')
-            .then(response => {
-                state.commit('fetchBoards', response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    state.commit('fetchBoards', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         LOGIN(state, loginData) {
             return axios.post('http://localhost:3000/users/login', loginData)
@@ -54,6 +72,8 @@ export default new Vuex.Store({
                 });
         },
         LOGOUT(state) {
+            axios.defaults.headers.common['Access-Token'] = undefined;
+
             state.commit('LOGOUT');
         }
     }
