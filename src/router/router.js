@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Board from '../components/Board.vue';
 import Home from '../components/Home.vue';
 import Login from '../components/Login.vue';
+import Register from '../components/Register.vue';
 import BoardView from '../components/BoardView.vue';
 import NoAuth from '../components/NoAuth.vue';
 import PageNotFound from '../components/PageNotFound.vue';
@@ -17,38 +18,51 @@ const requireAuth = () => (from, to, next) => {
     next('/noauth'); // isAuth === false면 다시 로그인 화면으로 이동
 };
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     routes: [{
             path: '/',
-            name: 'Home',
+            name: 'CAPS',
             component: Home
         },
         {
             path: '/board',
-            name: 'Board',
+            name: '게시판',
             component: Board
         },
         {
             path: '/login',
-            name: 'Login',
+            name: 'CAPS 로그인',
             component: Login
         },
         {
+            path: '/register',
+            name: 'CAPS 회원 가입',
+            component: Register
+        },
+        {
             path: '/board/view/:boardId',
+            name: '게시글 보기',
             component: BoardView,
             beforeEnter: requireAuth(),
             props: true
         },
         {
             path: '/noauth',
-            name: 'NoAuth',
+            name: '권한 필요!',
             component: NoAuth
         },
         {
             path: '*',
-            name: 'PageNotFound',
+            name: '404 Not Found',
             component: PageNotFound
         }
     ]
 });
+
+router.beforeEach((to, from, next) => {
+    document.title = to.name;
+    next();
+});
+
+export default router;

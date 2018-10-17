@@ -1,8 +1,8 @@
 <template>
-<div class="login container">    
+<div class="register container">    
     <div class="row">
-        <div class="col-md-4 login-main">
-            <h3 class="text-center"> CAPS 로그인 </h3>
+        <div class="col-md-4 register-main">
+            <h3 class="text-center"> CAPS 회원가입 </h3>
             <hr />
             <form v-on:submit.prevent="onSubmit">
                 <div class="input-group mb-3">
@@ -19,13 +19,11 @@
                     <input type="password" v-model="user_password"
                         class="form-control" id="password" placeholder="비밀번호를 입력하세요" autocomplete="off" required />
                 </div>                
-                <button type="submit" :disabled="isLoginProcessing" class="btn btn-primary btn-block">
-                    <span v-if="isLoginProcessing">로그인 중...</span>
-                    <span v-else>로그인</span>
+                <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
+                    <span v-if="isProcessing">회원 가입 중...</span>
+                    <span v-else>회원 가입</span>
                 </button>
             </form>
-            <hr />
-            <p> 아직 회원이 아니시라면? <router-link to="/register" class="badge badge-info">회원 가입</router-link></p>
         </div>
     </div>
 </div>
@@ -33,21 +31,21 @@
 
 <script>
 export default {
-    name: 'Login',
+    name: 'Register',
     data() {
         return {
             user_id: '',
             user_password: '',
 
-            // 로그인 진행 중
-            isLoginProcessing: false
+            // 진행 중
+            isProcessing: false
         };
     },
     methods: {
         onSubmit() {
-            this.isLoginProcessing = true;
+            this.isProcessing = true;
 
-            this.$store.dispatch('LOGIN', {
+            this.$store.dispatch('register', {
                     user_id: this.user_id,
                     user_password: this.user_password
                 })
@@ -55,20 +53,20 @@ export default {
                     // 로그인 성공
                     if (this.$store.getters.isLogined) {
                         this.$notify({
-                            title: '로그인 성공!',
-                            text: '환영합니다 ' + this.$store.getters.getUserData.user_name + '님!',
+                            title: '회원 가입 성공!',
+                            text: '로그인 해 주세요',
                             type: 'success'
                         });
-                        this.$router.push('/');
+                        this.$router.push('/login');
                     }
                     // 로그인 실패
                     else {
                         this.$notify({
-                            title: '로그인 실패!',
-                            text: '로그인에 실패하였습니다. 아이디, 비밀번호를 다시 확인해 주세요.',
-                            type: 'warn'
+                            title: '회원 가입 실패!',
+                            text: '회원 가입에 실패하였습니다. 입력한 정보를 다시 확인해 주세요.',
+                            type: 'error'
                         });
-                        this.isLoginProcessing = false;
+                        this.isProcessing = false;
                     }
                 })
                 .catch(error => console.log(error));
@@ -78,7 +76,7 @@ export default {
 </script>
 
 <style>
-.login-main {
+.register-main {
     margin: auto
 }
 </style>
