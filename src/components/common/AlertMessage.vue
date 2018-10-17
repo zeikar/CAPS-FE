@@ -1,16 +1,23 @@
 <template>
-<div class="container">
-    <div class="alert alert-warning">
-        {{ msg }}
-    </div>
-</div>
+<notifications position="top center" />
 </template>
 
 <script>
 export default {
-    name: 'AlertMessage',
-    props: {
-        msg: String
-    }
+    name: 'AlertMessage'
 };
 </script>
+
+<style>
+.vue-notification {
+    padding: 10px;
+    margin: 20px 5px 5px;
+
+    font-size: 15px;
+
+    color: #ffffff;
+    background: #44A4FC;
+    border-left: 5px solid #187FE7;
+
+}
+</style>

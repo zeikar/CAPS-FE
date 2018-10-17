@@ -2,7 +2,8 @@
 <div class="login container">    
     <div class="row">
         <div class="col-md-4 login-main">
-            <AlertMessage v-show="loginMessage != ''" v-bind:msg="loginMessage" />
+            <h3 class="text-center"> CAPS 로그인 </h3>
+            <hr />
             <form v-on:submit.prevent="onSubmit">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -23,6 +24,8 @@
                     <span v-else>로그인</span>
                 </button>
             </form>
+            <hr />
+            <p> 아직 회원이 아니시라면? <router-link to="/register" class="badge badge-info">회원 가입</router-link></p>
         </div>
     </div>
 </div>
@@ -58,11 +61,20 @@ export default {
                 .then(() => {
                     // 로그인 성공
                     if (this.$store.getters.isLogined) {
+                        this.$notify({
+                            title: '로그인 성공!',
+                            text: '환영합니다 ' + this.$store.getters.getUserData.user_name + '님!',
+                            type: 'success'
+                        });
                         this.$router.push('/');
                     }
                     // 로그인 실패
                     else {
-                        this.loginMessage = '로그인에 실패하였습니다. 아이디, 비밀번호를 다시 확인해 주세요.';
+                        this.$notify({
+                            title: '로그인 실패!',
+                            text: '로그인에 실패하였습니다. 아이디, 비밀번호를 다시 확인해 주세요.',
+                            type: 'warn'
+                        });
                         this.isLoginProcessing = false;
                     }
                 })
