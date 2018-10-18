@@ -100,6 +100,14 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Access-Token'] = undefined;
 
             state.commit('LOGOUT');
-        }
+        },
+        // 회원 가입
+        register(state, userData) {
+            return axios.post('http://localhost:3000/users/signup', userData)
+                .catch(error => {
+                    console.log(error);
+                    throw error;
+                });
+        },
     }
 });
