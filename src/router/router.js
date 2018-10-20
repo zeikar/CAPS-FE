@@ -7,6 +7,7 @@ import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import BoardView from '../components/BoardView.vue';
 import BoardForm from '../components/BoardForm.vue';
+import Test from '../components/Test.vue';
 import NoAuth from '../components/NoAuth.vue';
 import PageNotFound from '../components/PageNotFound.vue';
 
@@ -55,6 +56,11 @@ const router = new Router({
             component: BoardForm,
             beforeEnter: requireAuth(),
             props: true
+        },
+        {
+            path: '/test',
+            name: '테스트',
+            component: Test
         },
         {
             path: '/noauth',
