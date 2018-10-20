@@ -3,7 +3,7 @@
     <label for="id">{{ name }}</label>
     <input type="text"  v-on:input="inputData=$event.target.value"
         :class="isInit?'form-control':isValid?'is-valid':'is-invalid'" @keyup="onInput()"
-        id="id" class="form-control" :placeholder="name + ' 입력하세요.'" autocomplete="off"
+        id="id" class="form-control" :placeholder="nameWithJosa + ' 입력하세요'" autocomplete="off"
         aria-describedby="helpBlock" />
     <div v-show="!isValid" id="helpBlock" class="invalid-feedback form-text text-danger">
         <ul>
@@ -16,11 +16,15 @@
 </template>
 
 <script>
+import Josa from 'josa-js';
+
 export default {
     data() {
         return {
             inputData: this.initialData,
-            validCheckMessage: []
+            validCheckMessage: [],
+
+            nameWithJosa: this.name + Josa.c(this.name, '을')
         };
     },
     props: {
@@ -45,7 +49,7 @@ export default {
         validCheck() {
             this.validCheckMessage = [];
             if (this.inputData.length == 0) {
-                this.validCheckMessage.push(this.name + ' 입력하세요.');
+                this.validCheckMessage.push(this.nameWithJosa + ' 입력하세요.');
                 return;
             }
 

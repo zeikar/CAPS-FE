@@ -1,53 +1,42 @@
 <template>
 <div class="login container">
-            <h3 class="text-center"> 글 쓰기 </h3>
-            <hr />
-            <form v-on:submit.prevent="onSubmit">
-                <div class="form-group mb-3">
-                    <label for="id">제목</label>
-                    <input type="text" v-model="board_title"
-                        :class="isTitleValid?'is-valid':'is-invalid'" @keyup="titleValidCheck()"
-                        id="id" class="form-control" placeholder="제목을 입력하세요" autocomplete="off"
-                        autofocus aria-describedby="titleHelpBlock" />
-                    <div v-show="!isTitleValid" id="titleHelpBlock" class="invalid-feedback form-text text-danger">
-                        <ul>
-                            <li v-for="(message, index) in titleValidCheckMessage" v-bind:key="index">
-                                {{ message }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="grade">카테고리</label>
-                    <select class="form-control" v-model="board_category"
-                        :class="board_category.length==0&&categoryValidCheckMessage.length==0?'form-control':isCategoryValid?'is-valid':'is-invalid'"  @change="categoryValidCheck()"
-                        aria-describedby="gradeHelpBlock" >
-                        <option disabled value="">카테고리를 선택하세요</option>
-                        <option v-for="option in getCategoryOptions()" v-bind:value="option.value" v-bind:key="option.value">
-                            {{ option.text }}
-                        </option>
-                    </select>
-                    <div v-show="!isCategoryValid" id="gradeHelpBlock" class="invalid-feedback form-text text-danger">
-                        <ul>
-                            <li v-for="(message, index) in categoryValidCheckMessage" v-bind:key="index">
-                                {{ message }}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="board_content">내용</label>
-                    <textarea class="form-control" id="board_content" rows="3"></textarea>
-                </div>        
-                <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
-                    <span v-if="isProcessing">작성 중...</span>
-                    <span v-else>작성</span>
-                </button>
-            </form>
+    <h3 class="text-center"> 글 쓰기 </h3>
+    <hr />
+    <form v-on:submit.prevent="onSubmit">
+        <InputForm v-bind:initialData="board_title" v-on:input="onBoardTitleChange" name="제목" />
+
+        <div class="form-group mb-3">
+            <label for="grade">카테고리</label>
+            <select class="form-control" v-model="board_category"
+                :class="board_category.length==0&&categoryValidCheckMessage.length==0?'form-control':isCategoryValid?'is-valid':'is-invalid'"  @change="categoryValidCheck()"
+                aria-describedby="gradeHelpBlock" >
+                <option disabled value="">카테고리를 선택하세요</option>
+                <option v-for="option in getCategoryOptions()" v-bind:value="option.value" v-bind:key="option.value">
+                    {{ option.text }}
+                </option>
+            </select>
+            <div v-show="!isCategoryValid" id="gradeHelpBlock" class="invalid-feedback form-text text-danger">
+                <ul>
+                    <li v-for="(message, index) in categoryValidCheckMessage" v-bind:key="index">
+                        {{ message }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="board_content">내용</label>
+            <textarea class="form-control" id="board_content" rows="3"></textarea>
+        </div>
+        <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
+            <span v-if="isProcessing">작성 중...</span>
+            <span v-else>작성</span>
+        </button>
+    </form>
 </div>
 </template>
 
 <script>
+import InputForm from './form/InputForm.vue';
 import BoardService from '../service/board';
 
 export default {
@@ -58,17 +47,14 @@ export default {
             board_title: '',
             board_content: '',
 
+            isBoardTitleValid: false,
             // 안내 메시지
-            titleValidCheckMessage: [],
             categoryValidCheckMessage: [],
             // 진행 중
             isProcessing: false
         };
     },
-    computed: {        
-        isTitleValid() {
-            return this.titleValidCheckMessage.length == 0;
-        },
+    computed: {
         isCategoryValid() {
             return this.categoryValidCheckMessage.length == 0;
         },
@@ -77,17 +63,14 @@ export default {
         // 기수 선택용 옵션
         getCategoryOptions() {
             var options = [];
-           
+
             // 카테고리 가져오기!!!!!!!!!!!! 필요
-            options[0] = {text: '공지사항', value: 1};
+            options[0] = {
+                text: '공지사항',
+                value: 1
+            };
 
             return options;
-        },
-        titleValidCheck() {
-            this.titleValidCheckMessage = [];
-            if (this.board_title.length == 0) {
-                this.titleValidCheckMessage.push('제목을 입력하세요.');
-            }
         },
         categoryValidCheck() {
             this.categoryValidCheckMessage = [];
@@ -96,12 +79,15 @@ export default {
                 this.categoryValidCheckMessage.push('카테고리를 선택하세요.');
             }
         },
+        onBoardTitleChange(value, valid) {
+            this.board_title = value;
+            this.isBoardTitleValid = valid;
+        },
         onSubmit() {
             // 전체 확인
-            this.titleValidCheck();
             this.categoryValidCheck();
 
-            if (!(this.isTitleValid && this.isCategoryValid)) {
+            if (!(this.isBoardTitleValid && this.isCategoryValid)) {
                 this.$notify({
                     title: '올바르지 않은 입력이 있습니다.',
                     text: '다시 확인 후 입력해주세요.',
@@ -109,7 +95,7 @@ export default {
                 });
                 return;
             }
-            
+
             this.isProcessing = true;
 
             BoardService.writeBoard({
@@ -136,6 +122,9 @@ export default {
                     this.isProcessing = false;
                 });
         }
+    },
+    components: {
+        InputForm
     }
 };
 </script>
