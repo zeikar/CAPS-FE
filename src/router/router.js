@@ -6,6 +6,7 @@ import Home from '../components/Home.vue';
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import BoardView from '../components/BoardView.vue';
+import BoardForm from '../components/BoardForm.vue';
 import NoAuth from '../components/NoAuth.vue';
 import PageNotFound from '../components/PageNotFound.vue';
 
@@ -44,6 +45,14 @@ const router = new Router({
             path: '/board/view/:boardId',
             name: '게시글 보기',
             component: BoardView,
+            beforeEnter: requireAuth(),
+            props: true
+        },
+        
+        {
+            path: '/board/write',
+            name: '게시글 쓰기',
+            component: BoardForm,
             beforeEnter: requireAuth(),
             props: true
         },
