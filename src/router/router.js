@@ -52,7 +52,7 @@ const router = new Router({
         
         {
             path: '/board/write',
-            name: '게시글 쓰기',
+            name: '글 쓰기',
             component: BoardForm,
             beforeEnter: requireAuth(),
             props: true
