@@ -26,5 +26,18 @@ export default {
                     reject(error);
                 });
         });
+    },
+
+    // 아이디 중복 체크
+    getUserData(userId) {
+        return new Promise(function (resolve, reject) {
+            axios.get('http://localhost:3000/users/' + userId)
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
     }
 };

@@ -20,6 +20,7 @@
             </tr>
         </tbody>
     </table>
+    <router-link :to="'/board/write'" class="nav-link">글쓰기</router-link>                    
 </div>
 </template>
 

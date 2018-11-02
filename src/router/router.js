@@ -10,6 +10,7 @@ import BoardForm from '../components/BoardForm.vue';
 import Test from '../components/Test.vue';
 import NoAuth from '../components/NoAuth.vue';
 import PageNotFound from '../components/PageNotFound.vue';
+import Profile from '../components/Profile.vue';
 
 import store from '../store/store';
 
@@ -61,6 +62,11 @@ const router = new Router({
             path: '/test',
             name: '테스트',
             component: Test
+        },
+        {
+            path: '/profile',
+            name: '프로필',
+            component: Profile
         },
         {
             path: '/noauth',
