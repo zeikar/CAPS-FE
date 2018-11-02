@@ -14,6 +14,9 @@
                 <li class="nav-item">
                     <router-link to="/board" class="nav-link">게시판</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link to="/gallery" class="nav-link">갤러리</router-link>
+                </li>
                 <!-- Dropdown -->
                 <li v-if="isLogined" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">안녕하세요 {{ getUserName }}님!</a>
