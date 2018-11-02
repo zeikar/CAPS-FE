@@ -28,7 +28,7 @@ export default {
         });
     },
 
-    // 아이디 중복 체크
+    // 아이디에 해당하는 사용자 데이터를 가져옴.
     getUserData(userId) {
         return new Promise(function (resolve, reject) {
             axios.get('http://localhost:3000/users/' + userId)
