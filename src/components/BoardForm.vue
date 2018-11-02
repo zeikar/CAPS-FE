@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label for="board_content">내용</label>
-            <textarea class="form-control" id="board_content" rows="3"></textarea>
+            <textarea class="form-control" id="board_content"  v-model="board_content" rows="3"></textarea>
         </div>
         <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
             <span v-if="isProcessing">작성 중...</span>
