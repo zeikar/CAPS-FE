@@ -9,6 +9,8 @@ import BoardView from '../components/BoardView.vue';
 import BoardForm from '../components/BoardForm.vue';
 import Profile from '../components/Profile.vue';
 import Gallery from '../components/Gallery.vue';
+import AlbumForm from '../components/AlbumForm.vue';
+import AlbumView from '../components/AlbumView.vue';
 import Test from '../components/Test.vue';
 import NoAuth from '../components/NoAuth.vue';
 import PageNotFound from '../components/PageNotFound.vue';
@@ -68,6 +70,20 @@ const router = new Router({
             path: '/gallery',
             name: '갤러리',
             component: Gallery
+        },
+        {
+            path: '/gallery/upload',
+            name: '앨범 만들기',
+            component: AlbumForm,
+            beforeEnter: requireAuth(),
+            props: true
+        },
+        {
+            path: '/gallery/view/:albumId',
+            name: '앨범 보기',
+            component: AlbumView,
+            beforeEnter: requireAuth(),
+            props: true
         },
         {
             path: '/test',

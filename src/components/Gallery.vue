@@ -13,7 +13,7 @@
             <tr v-for="(album, index) in gallery" v-bind:key="album._id">
                 <td>{{ index + 1 }}</td>
                 <td>
-                    <router-link :to="'/board/view/'+album._id" class="nav-link">{{ album.album_title }}</router-link>                    
+                    <router-link :to="'/gallery/view/'+album._id" class="nav-link">{{ album.album_title }}</router-link>                    
                 </td>
                 <td>{{ album.user.user_name }}</td>
                 <td>{{ album.updated_at }}</td>

@@ -6,7 +6,10 @@ export default {
     uploadImage(formData, onUploadProgressCallback) {
         return new Promise(function (resolve, reject) {
             axios.post('http://localhost:3000/gallery', formData, {
-                    onUploadProgress: onUploadProgressCallback
+                    onUploadProgress: onUploadProgressCallback,
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
                 })
                 .then(response => {
                     resolve(response.data);

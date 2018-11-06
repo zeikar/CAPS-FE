@@ -32,7 +32,9 @@ export default new Vuex.Store({
         // 현재 게시글 정보
         board: null,
         // 갤러리
-        gallery: []
+        gallery: [],
+        // 앨범
+        album: null
     },
     getters: {
         getBoards(state) {
@@ -43,6 +45,9 @@ export default new Vuex.Store({
         },
         getGallery(state) {
             return state.gallery;
+        },
+        getAlbum(state) {
+            return state.album;
         },
         isLogined(state) {
             return state.accessToken != null && state.accessToken != undefined;
@@ -60,6 +65,9 @@ export default new Vuex.Store({
         },
         fetchGallery(state, galleryData) {
             state.gallery = galleryData;
+        },
+        fetchAlbum(state, albumData) {
+            state.album = albumData;
         },
         LOGIN(state, accessToken) {
             state.accessToken = accessToken;
@@ -99,6 +107,15 @@ export default new Vuex.Store({
             axios.get('http://localhost:3000/gallery')
                 .then(response => {
                     state.commit('fetchGallery', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        fetchAlbum(state, albumId) {
+            axios.get('http://localhost:3000/gallery/view/' + albumId)
+                .then(response => {
+                    state.commit('fetchAlbum', response.data);
                 })
                 .catch(error => {
                     console.log(error);
