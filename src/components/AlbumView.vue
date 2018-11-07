@@ -17,7 +17,7 @@
     <div class="post-content">
         <div class="row" v-for="photo in album.photos" v-bind:key="photo._id">
             <div class="col-sm-12">
-                    <img class="img-fluid" :src="'http://localhost:3000/gallery/photo/' + photo._id">
+                <img class="img-fluid" :src="'http://localhost:3000/gallery/photo/' + photo._id">
             </div>
         </div>
     </div>

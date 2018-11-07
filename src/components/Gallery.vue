@@ -6,7 +6,7 @@
                 <img class="card-img-top" :alt="album.album_title" :src="getPhotoUrl(album.photos[0]._id)" >
                 <div class="card-body">
                     <h4 class="card-title">
-                        <router-link :to="'/gallery/view/'+album._id" class="nav-link">{{ album.album_title }}</router-link>
+                        <router-link :to="'/gallery/view/'+album._id">{{ album.album_title }}</router-link>
                     </h4>
                     <p class="card-text">{{ album.created_at }}</p>
                     <a href="#" class="btn btn-primary">좋아요!</a>
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <router-link :to="'/gallery/upload'" class="nav-link">앨범 생성</router-link>
+    <router-link :to="'/gallery/upload'" class="btn btn-outline-primary">앨범 생성</router-link>
 </div>
 </template>
 
