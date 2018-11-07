@@ -15,20 +15,11 @@
     </div>
 
     <div class="post-content">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>제목</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(photo, index) in album.photos" v-bind:key="photo._id">
-                    <td>{{ index + 1 }}</td>                    
-                    <td> <img :src="'http://localhost:3000/gallery/photo/' + photo._id"> </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row" v-for="photo in album.photos" v-bind:key="photo._id">
+            <div class="col-sm-12">
+                    <img class="img-fluid" :src="'http://localhost:3000/gallery/photo/' + photo._id">
+            </div>
+        </div>
     </div>
 
     <div class="post-buttons">

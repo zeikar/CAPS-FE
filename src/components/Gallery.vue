@@ -1,34 +1,35 @@
 <template>
 <div class="gallery container">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(album, index) in gallery" v-bind:key="album._id">
-                <td>{{ index + 1 }}</td>
-                <td>
-                    <router-link :to="'/gallery/view/'+album._id" class="nav-link">{{ album.album_title }}</router-link>                    
-                </td>
-                <td>{{ album.user.user_name }}</td>
-                <td>{{ album.updated_at }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <router-link :to="'/gallery/upload'" class="nav-link">사진 업로드</router-link>                    
+    <div class="row">
+        <div class="col-sm-4 col-xs-12 img-wrapper" v-for="album in gallery" v-bind:key="album._id">
+            <div class="card">
+                <img class="card-img-top" :alt="album.album_title" :src="getPhotoUrl(album.photos[0]._id)" >
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <router-link :to="'/gallery/view/'+album._id" class="nav-link">{{ album.album_title }}</router-link>
+                    </h4>
+                    <p class="card-text">{{ album.created_at }}</p>
+                    <a href="#" class="btn btn-primary">좋아요!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <router-link :to="'/gallery/upload'" class="nav-link">앨범 생성</router-link>
 </div>
 </template>
 
 <script>
+import RestAPI from '../constants/RestAPI';
+
 export default {
     name: 'Gallery',
     mounted() {
         this.$store.dispatch('fetchGallery');
+    },
+    methods: {
+        getPhotoUrl(photoId) {
+            return RestAPI.GET_PHOTO + photoId;
+        }
     },
     computed: {
         gallery() {
