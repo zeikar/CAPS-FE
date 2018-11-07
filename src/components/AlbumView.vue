@@ -20,11 +20,24 @@
 
                 <div class="modal-body">
                     <slot name="body">
-                        <div class="row" v-for="photo in album.photos" v-bind:key="photo._id">
-                            <div class="col-sm-12">
-                                <img class="img-fluid" :src="'http://localhost:3000/gallery/photo/' + photo._id">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" :data-slide-to="index" :class="index==0?'active':''" v-for="(photo, index) in album.photos" v-bind:key="photo._id">></li>
+                            </ol>
+                            <div class="carousel-inner"  style="background-color:black">
+                                <div class="carousel-item" :class="index==0?'active':''" v-for="(photo, index) in album.photos" v-bind:key="photo._id">
+                                    <img class="img-fluid mx-auto d-block" :src="getPhotoUrl(photo._id)" :alt="photo.photo_name">
+                                </div>    
                             </div>
-                        </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>                        
                     </slot>
                 </div>
 
@@ -42,6 +55,8 @@
 </template>
 
 <script>
+import RestAPI from '../constants/RestAPI';
+
 export default {
     name: 'AlbumView',
     props: {
@@ -53,6 +68,9 @@ export default {
     methods: {
         closeButtonClicked() {
             this.$emit('closeModal');
+        },
+        getPhotoUrl(photoId) {
+            return RestAPI.GET_PHOTO + photoId;
         }
     },
     computed: {
@@ -90,7 +108,7 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
     font-family: Helvetica, Arial, sans-serif;
-    max-height: 80%;
+    max-height: 90%;
     overflow-y: scroll;
 }
 
