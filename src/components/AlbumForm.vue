@@ -4,8 +4,11 @@
     <hr />
     <form v-on:submit.prevent="onSubmit">
         <InputForm v-bind:initialData="albumTitle" v-on:input="onAlbumTitleChange" name="앨범 제목" />
-        <input type="file" multiple @change="onFileSelected" />
-   
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFileLang" multiple @change="onFileSelected" />
+            <label class="custom-file-label" for="customFileLang">앨범의 사진을 선택하세요.</label>
+        </div>
+
         <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
             <span v-if="isProcessing">생성 중...</span>
             <span v-else>생성</span>
@@ -30,7 +33,7 @@ export default {
             isProcessing: false
         };
     },
-    methods: {        
+    methods: {
         onAlbumTitleChange(value, valid) {
             this.albumTitle = value;
             this.isAlbumTitleValid = valid;
