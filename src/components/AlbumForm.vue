@@ -5,8 +5,17 @@
     <form v-on:submit.prevent="onSubmit">
         <InputForm v-bind:initialData="albumTitle" v-on:input="onAlbumTitleChange" name="앨범 제목" />
         <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFileLang" multiple @change="onFileSelected" />
-            <label class="custom-file-label" for="customFileLang">앨범의 사진을 선택하세요.</label>
+            <input type="file" accept="image/*"  class="custom-file-input" id="customFileLang" multiple @change="onFileSelected" />
+            <label class="custom-file-label" for="customFileLang">
+                <span v-if="selectedFiles==null">앨범의 사진을 선택하세요.</span>
+                <span v-else>사진 {{selectedFiles.length}}개 선택됨.</span>
+            </label>
+        </div>
+        <div class="row">
+            <div v-for="(file, key) in selectedFiles" v-bind:key="key" class="col-sm-3">
+                {{ file.name }}
+                <img class="img-thumbnail" v-bind:ref="'image'+parseInt( key )"/>
+            </div>
         </div>
 
         <button type="submit" :disabled="isProcessing" class="btn btn-primary btn-block">
@@ -40,7 +49,40 @@ export default {
         },
         onFileSelected(event) {
             this.selectedFiles = event.target.files;
+
+            this.getImagePreviews();
         },
+        getImagePreviews(){
+        /*
+          Iterate over all of the files and generate an image preview for each one.
+        */
+        for( let i = 0; i < this.selectedFiles.length; i++ ){
+          /*
+            Ensure the file is an image file
+          */
+          if ( /\.(jpe?g|png|gif)$/i.test( this.selectedFiles[i].name ) ) {
+            /*
+              Create a new FileReader object
+            */
+            let reader = new FileReader();
+
+            /*
+              Add an event listener for when the file has been loaded
+              to update the src on the file preview.
+            */
+            reader.addEventListener('load', function(){
+              this.$refs['image'+parseInt( i )][0].src = reader.result;
+            }.bind(this), false);
+
+            /*
+              Read the data for the file in through the reader. When it has
+              been loaded, we listen to the event propagated and set the image
+              src to what was loaded from the reader.
+            */
+            reader.readAsDataURL( this.selectedFiles[i] );
+          }
+        }
+      },
         // 파일 업로드
         onUploadButtonClicked() {
             const formData = new FormData();
