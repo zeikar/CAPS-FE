@@ -1,5 +1,5 @@
 # Create the container from the alpine linux image
-FROM alpine:latest
+FROM alpine:3.7
 
 # Add nginx and nodejs
 RUN apk add --update nginx nodejs
