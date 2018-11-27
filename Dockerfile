@@ -4,8 +4,16 @@ RUN apt-get -y update \
 	&& apt-get install -y git
 
 RUN yarn global add @vue/cli -g
+RUN yarn global add @vue/cli-service-global -g
 
-WORKDIR /path/in/container/your-app
+# Create app directory
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
 
 RUN apt-get autoremove -y \
     && apt-get autoclean -y \
@@ -14,9 +22,6 @@ RUN apt-get autoremove -y \
 
 # Or just use EXPORT 8080
 EXPOSE 8080
-# If yout want use vue-cli UI you need to also EXPORT 8000 
-
-USER node
 
 # switch to npm if you chose it as package manager
 CMD ["vue", "serve"]
