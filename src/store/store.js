@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import RestAPI from '../constants/RestAPI';
 
 Vue.use(Vuex);
 
@@ -86,7 +87,7 @@ export default new Vuex.Store({
     },
     actions: {
         fetchBoards(state) {
-            axios.get('http://localhost:3000/boards')
+            axios.get(RestAPI.SERVER_DOMAIN + 'boards')
                 .then(response => {
                     state.commit('fetchBoards', response.data);
                 })
@@ -95,7 +96,7 @@ export default new Vuex.Store({
                 });
         },
         fetchBoard(state, boardId) {
-            axios.get('http://localhost:3000/boards/view/' + boardId)
+            axios.get(RestAPI.SERVER_DOMAIN + 'boards/view/' + boardId)
                 .then(response => {
                     state.commit('fetchBoard', response.data);
                 })
@@ -104,7 +105,7 @@ export default new Vuex.Store({
                 });
         },
         fetchGallery(state) {
-            axios.get('http://localhost:3000/gallery')
+            axios.get(RestAPI.SERVER_DOMAIN + 'gallery')
                 .then(response => {
                     state.commit('fetchGallery', response.data);
                 })
@@ -113,7 +114,7 @@ export default new Vuex.Store({
                 });
         },
         fetchAlbum(state, albumId) {
-            axios.get('http://localhost:3000/gallery/view/' + albumId)
+            axios.get(RestAPI.SERVER_DOMAIN + 'gallery/view/' + albumId)
                 .then(response => {
                     state.commit('fetchAlbum', response.data);
                 })
@@ -122,7 +123,7 @@ export default new Vuex.Store({
                 });
         },
         LOGIN(state, loginData) {
-            return axios.post('http://localhost:3000/users/login', loginData)
+            return axios.post(RestAPI.SERVER_DOMAIN + 'users/login', loginData)
                 .then((response) => {
                     state.commit('LOGIN', response.headers['access-token']);
                 })

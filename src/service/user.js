@@ -1,11 +1,12 @@
 import axios from 'axios';
+import RestAPI from '../constants/RestAPI';
 
 // User에 관련된 axios 액션 정의
 export default {
     // 아이디 중복 체크
     checkUserId(userId) {
         return new Promise(function (resolve, reject) {
-            axios.get('http://localhost:3000/users/check/' + userId)
+            axios.get(RestAPI.SERVER_DOMAIN + 'users/check/' + userId)
                 .then(response => {
                     resolve(response.data);
                 })
@@ -18,7 +19,7 @@ export default {
     // 회원 가입
     registerUser(userData) {
         return new Promise(function (resolve, reject) {
-            axios.post('http://localhost:3000/users/signup', userData)
+            axios.post(RestAPI.SERVER_DOMAIN + 'users/signup', userData)
                 .then(response => {
                     resolve(response.data);
                 })
@@ -31,7 +32,7 @@ export default {
     // 아이디에 해당하는 사용자 데이터를 가져옴.
     getUserData(userId) {
         return new Promise(function (resolve, reject) {
-            axios.get('http://localhost:3000/users/' + userId)
+            axios.get(RestAPI.SERVER_DOMAIN + 'users/' + userId)
                 .then(response => {
                     resolve(response.data);
                 })
