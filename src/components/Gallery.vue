@@ -6,11 +6,11 @@
                 <img class="card-img-top" :alt="album.album_title" :src="getPhotoUrl(album.photos[0]._id)" >
                 <div class="card-body">
                     <h4 class="card-title">
-                        <a href="#" data-toggle="modal" @click="albumClick(album._id)"
+                        <a href="javascript:void(0)" data-toggle="modal" @click="albumClick(album._id)"
                             data-target="#albumModal">{{ album.album_title }}</a>
                     </h4>
                     <p class="card-text">{{ album.created_at }}</p>
-                    <a href="#" class="btn btn-primary">좋아요!</a>
+                    <a href="javascript:void(0)" class="btn btn-primary">좋아요!</a>
                 </div>
             </div>
         </div>

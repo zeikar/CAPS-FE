@@ -13,7 +13,7 @@
             <tr v-for="(board, index) in boards" v-bind:key="board._id">
                 <td>{{ index + 1 }}</td>
                 <td>
-                    <a href="#" @click="boardClick(board._id)">{{ board.board_title }}</a>
+                    <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
                 <td>{{ board.user.user_name }}</td>
                 <td>{{ board.updated_at }}</td>

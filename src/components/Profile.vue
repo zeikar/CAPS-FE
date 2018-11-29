@@ -30,14 +30,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h6>Recent badges</h6>
-                                    <a href="#" class="badge badge-dark badge-pill">12등</a>
-                                    <a href="#" class="badge badge-dark badge-pill">김병현</a>
-                                    <a href="#" class="badge badge-dark badge-pill">codeply</a>
-                                    <a href="#" class="badge badge-dark badge-pill">angularjs</a>
-                                    <a href="#" class="badge badge-dark badge-pill">css3</a>
-                                    <a href="#" class="badge badge-dark badge-pill">jquery</a>
-                                    <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
-                                    <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">12등</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">김병현</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">codeply</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">angularjs</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">css3</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">jquery</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">bootstrap</a>
+                                    <a href="javascript:void(0)" class="badge badge-dark badge-pill">responsive-design</a>
                                     <hr>
                                     <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
                                     <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
