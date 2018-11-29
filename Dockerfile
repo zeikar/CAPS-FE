@@ -15,13 +15,17 @@ COPY nginx_config/default.conf /etc/nginx/conf.d/default.conf
 
 # Set the directory we want to run the next commands for
 WORKDIR /tmp/nginx/vue-single-page-app
-# Copy our source code into the container
-COPY . .
+
+COPY package*.json ./
+
 # Install the dependencies, can be commented out if you're running the same node version
 RUN npm install
 
 RUN npm install @vue/cli -g
 RUN npm install @vue/cli-service-global -g
+
+# Copy our source code into the container
+COPY . .
 
 # run webpack and the vue-loader
 RUN vue build
