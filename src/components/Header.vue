@@ -27,7 +27,7 @@
                     </div>
                 </li>
                 <li v-else class="nav-item">
-                    <a class="nav-link" @click="onClickLogin()">로그인</a>
+                    <a href="#" class="nav-link" @click="onClickLogin()">로그인</a>
                 </li>
             </ul>
         </div>
@@ -52,7 +52,7 @@ export default {
             this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'));
         },
         onClickLogin() {            
-            this.$store.dispatch('setNextDestination', this.$route.query.page).then(() => this.$router.push('/login'));
+            this.$store.dispatch('setNextDestination', this.$router.history.current.path).then(() => this.$router.push('/login'));
         }
     }
 };
