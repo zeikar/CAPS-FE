@@ -52,7 +52,7 @@ export default {
             this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'));
         },
         onClickLogin() {            
-            this.$store.dispatch('setDestination', this.$route.query.page).then(() => this.$router.push('/login'));
+            this.$store.dispatch('setNextDestination', this.$route.query.page).then(() => this.$router.push('/login'));
         }
     }
 };
