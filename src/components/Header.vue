@@ -27,7 +27,7 @@
                     </div>
                 </li>
                 <li v-else class="nav-item">
-                    <router-link to="/login" class="nav-link">로그인</router-link>
+                    <a class="nav-link" @click="onClickLogin()">로그인</a>
                 </li>
             </ul>
         </div>
@@ -50,6 +50,9 @@ export default {
         onClickLogout() {
             // LOGOUT 변이 실행 후 리다이렉트 
             this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'));
+        },
+        onClickLogin() {            
+            this.$store.dispatch('setDestination', this.$route.query.page).then(() => this.$router.push('/login'));
         }
     }
 };

@@ -48,8 +48,7 @@ export default {
                     text: '앨범을 보시려면 로그인이 필요합니다. 로그인해 주세요.',
                     type: 'warn'
                 });
-                this.$router.push('/login');
-                this.$store.dispatch('setDestination', nextDestination);
+                this.$store.dispatch('setDestination', nextDestination).then(() => this.$router.push('/login'));
 
                 return;
             }
