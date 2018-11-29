@@ -35,7 +35,9 @@ export default new Vuex.Store({
         // 갤러리
         gallery: [],
         // 앨범
-        album: null
+        album: null,
+        // 로그인 후 넘어갈 url
+        nextDestination: '/'
     },
     getters: {
         getBoards(state) {
@@ -55,6 +57,9 @@ export default new Vuex.Store({
         },
         getUserData(state) {
             return jwt.decode(state.accessToken);
+        },
+        getNextDestination(state) {
+            return state.nextDestination;
         }
     },
     mutations: {
@@ -83,6 +88,9 @@ export default new Vuex.Store({
             // 토큰 정보 삭제  
             state.accessToken = null;
             delete localStorage.accessToken;
+        },
+        setNextDestination(state, url) {
+            state.nextDestination = url;
         }
     },
     actions: {
@@ -135,6 +143,9 @@ export default new Vuex.Store({
             axios.defaults.headers.common['Access-Token'] = undefined;
 
             state.commit('LOGOUT');
-        }       
+        },
+        setNextDestination(state, url) {
+            state.commit('setNextDestination', url);
+        }
     }
 });

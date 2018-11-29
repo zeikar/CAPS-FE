@@ -40,6 +40,7 @@ export default {
             return RestAPI.GET_PHOTO + photoId;
         },
         albumClick(albumId) {
+            let nextDestination = '/gallery/';
             // 로그인 체크
             if (!this.$store.getters.isLogined) {
                 this.$notify({
@@ -48,6 +49,7 @@ export default {
                     type: 'warn'
                 });
                 this.$router.push('/login');
+                this.$store.dispatch('setDestination', nextDestination);
 
                 return;
             }

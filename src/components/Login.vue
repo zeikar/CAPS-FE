@@ -59,7 +59,7 @@ export default {
                             text: '환영합니다 ' + this.$store.getters.getUserData.user_name + '님!',
                             type: 'success'
                         });
-                        this.$router.push('/');
+                        this.$router.push(this.$store.getters.getNextDestination);
                     }
                     // 로그인 실패
                     else {
