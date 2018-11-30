@@ -18,7 +18,7 @@
         {{ board.board_content }}
     </div>
 
-    <div class="post-buttons">
+    <div v-if="getUserId == board.user._id" class="post-buttons">
         <div class="row">
             <div class="col-sm-2">
                 <a href="../../forum/modify/?id=377" class="btn btn-warning btn-block" role="button">글 수정</a>
@@ -55,7 +55,10 @@ export default {
                 });
         }
     },
-    computed: {
+    computed: {        
+        getUserId() {
+            return this.$store.getters.getUserData.user__id;
+        },
         board() {
             return this.$store.getters.getBoard;
         }
