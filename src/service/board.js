@@ -14,5 +14,17 @@ export default {
                     reject(error);
                 });
         });
+    },
+    deleteBoard(boardId) {
+        return new Promise(function (resolve, reject) {
+            axios.delete(RestAPI.SERVER_DOMAIN + 'boards/' + boardId)
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+
     }
 };

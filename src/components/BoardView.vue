@@ -25,7 +25,7 @@
             </div>
             <div class="col-sm-8"></div>
             <div class="col-sm-2">
-                <a href="../../forum/delete/?id=377" class="btn btn-danger btn-block" role="button" onclick="return Delete_Confirm()">글 삭제</a>
+                <button class="btn btn-danger btn-block" role="button" @click="deleteBoard()">글 삭제</button>
             </div>
         </div>
     </div>
@@ -34,11 +34,25 @@
 </template>
 
 <script>
+import BoardService from '../service/board';
+
 export default {
     name: 'BoardView',
     props: ['boardId'],
     mounted() {
         this.$store.dispatch('fetchBoard', this.boardId);
+    },
+    methods: {
+        deleteBoard() {
+            BoardService.deleteBoard(this.boardId);
+
+            this.$notify({
+                title: '게시글 삭제 성공!',
+                text: '게시글이 성공적으로 삭제 되었습니다!',
+                type: 'success'
+            });
+            this.$router.push('/board/');
+        }
     },
     computed: {
         board() {
