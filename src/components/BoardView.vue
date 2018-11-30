@@ -44,14 +44,15 @@ export default {
     },
     methods: {
         deleteBoard() {
-            BoardService.deleteBoard(this.boardId);
-
-            this.$notify({
-                title: '게시글 삭제 성공!',
-                text: '게시글이 성공적으로 삭제 되었습니다!',
-                type: 'success'
-            });
-            this.$router.push('/board/');
+            BoardService.deleteBoard(this.boardId)
+                .then(() => {
+                    this.$notify({
+                        title: '게시글 삭제 성공!',
+                        text: '게시글이 성공적으로 삭제 되었습니다!',
+                        type: 'success'
+                    });
+                    this.$router.push('/board/');
+                });
         }
     },
     computed: {
