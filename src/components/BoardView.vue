@@ -6,7 +6,7 @@
                 <h2> {{ board.board_title }} </h2>
             </div>
             <div class="col-md-2 col-sm-6">
-                <p> <span class="badge badge-primary">By</span> <a class="colored_name10" href="/profile/admin">{{ board.user.user_name }}</a> </p>
+                <p> <span class="badge badge-primary">By</span> <router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link> </p>
             </div>
             <div class="col-md-3 col-sm-6">
                 <p> <span class="badge badge-primary">At</span> <a href="#stay_here" data-toggle="tooltip" title="" data-original-title="">{{ board.updated_at }}</a> </p>
