@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             <tr v-for="(board, index) in boards" v-bind:key="board._id">
-                <td>{{ index + 1 }}</td>
+                <td>{{ boards.length - index }}</td>
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
