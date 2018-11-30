@@ -66,6 +66,12 @@ const router = new Router({
             component: Profile
         },
         {
+            path: '/profile/:userId',
+            name: '프로필',
+            component: Profile,
+            props: true
+        },
+        {
             path: '/gallery',
             name: '갤러리',
             component: Gallery

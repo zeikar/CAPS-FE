@@ -207,11 +207,18 @@ export default {
             user: {}
         };
     },
+    props: ['userId'],
     mounted() {
         // 사용자 가져옴
-        UserService.getUserData(this.$store.getters.getUserData.user_id).then(data => {
-            this.user = data;
-        });
+        if(this.userId) {
+            UserService.getUserData(this.userId).then(data => {
+                this.user = data;
+            });
+        } else {
+            UserService.getUserData(this.$store.getters.getUserData.user_id).then(data => {
+                this.user = data;
+            });
+        }
     }
 };
 </script>
