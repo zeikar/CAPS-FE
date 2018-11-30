@@ -15,7 +15,7 @@
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
-                <td>{{ board.user.user_name }}</td>
+                <td><router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link></td>
                 <td>{{ board.updated_at }}</td>
             </tr>
         </tbody>
