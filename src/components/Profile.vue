@@ -11,7 +11,7 @@
                             <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                            <a v-if="!(userId && getUserId != userId)" href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
                         </li>
                     </ul>
                     <div class="tab-content py-4">
@@ -208,6 +208,11 @@ export default {
         };
     },
     props: ['userId'],
+     computed: {        
+        getUserId() {
+            return this.$store.getters.getUserData.user_id;
+        },
+    },
     mounted() {
         // 사용자 가져옴
         if(this.userId) {
@@ -215,7 +220,7 @@ export default {
                 this.user = data;
             });
         } else {
-            UserService.getUserData(this.$store.getters.getUserData.user_id).then(data => {
+            UserService.getUserData(this.getUserId).then(data => {
                 this.user = data;
             });
         }
