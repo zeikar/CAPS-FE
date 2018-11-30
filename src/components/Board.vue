@@ -16,8 +16,12 @@
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
-                <td><router-link :to="'/board/category/' + board.category._id">{{ board.category.category_name }}</router-link></td>
-                <td><router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link></td>
+                <td>
+                    <router-link :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
+                </td>
+                <td>
+                    <router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link>
+                </td>
                 <td>{{ board.updated_at }}</td>
             </tr>
         </tbody>
@@ -30,9 +34,16 @@
 export default {
     name: 'Board',
     mounted() {
-        this.$store.dispatch('fetchBoards');
+        this.fetchBoards();
     },
     methods: {
+        fetchBoards() {
+            if (this.$route.query.category) {
+                this.$store.dispatch('fetchBoardsCategory', this.$route.query.category);
+            } else {
+                this.$store.dispatch('fetchBoards');
+            }
+        },
         boardClick(boardId) {
             let nextDestination = '/board/view/' + boardId;
             // 로그인 체크

@@ -111,6 +111,15 @@ export default new Vuex.Store({
                     console.log(error);
                 });
         },
+        fetchBoardsCategory(state, category) {
+            axios.get(RestAPI.SERVER_DOMAIN + 'boards/category/' + category)
+                .then(response => {
+                    state.commit('fetchBoards', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         fetchBoard(state, boardId) {
             axios.get(RestAPI.SERVER_DOMAIN + 'boards/view/' + boardId)
                 .then(response => {
