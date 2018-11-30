@@ -5,6 +5,7 @@
             <tr>
                 <th>No.</th>
                 <th>제목</th>
+                <th>카테고리</th>
                 <th>작성자</th>
                 <th>작성일</th>
             </tr>
@@ -15,6 +16,7 @@
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
+                <td><router-link :to="'/board/category/' + board.category._id">{{ board.category.category_name }}</router-link></td>
                 <td><router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link></td>
                 <td>{{ board.updated_at }}</td>
             </tr>

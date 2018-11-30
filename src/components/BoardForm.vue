@@ -4,25 +4,8 @@
     <hr />
     <form v-on:submit.prevent="onSubmit">
         <InputForm v-bind:initialData="board_title" v-on:input="onBoardTitleChange" name="제목" />
+        <SelectionForm v-bind:initialData="board_category" v-bind:selectList="getCategoryOptions" v-on:input="onBoardCategoryChange" name="카테고리" />
 
-        <div class="form-group mb-3">
-            <label for="grade">카테고리</label>
-            <select class="form-control" v-model="board_category"
-                :class="board_category.length==0&&categoryValidCheckMessage.length==0?'form-control':isCategoryValid?'is-valid':'is-invalid'"  @change="categoryValidCheck()"
-                aria-describedby="gradeHelpBlock" >
-                <option disabled value="">카테고리를 선택하세요</option>
-                <option v-for="option in getCategoryOptions()" v-bind:value="option.value" v-bind:key="option.value">
-                    {{ option.text }}
-                </option>
-            </select>
-            <div v-show="!isCategoryValid" id="gradeHelpBlock" class="invalid-feedback form-text text-danger">
-                <ul>
-                    <li v-for="(message, index) in categoryValidCheckMessage" v-bind:key="index">
-                        {{ message }}
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="form-group">
             <label for="board_content">내용</label>
             <textarea class="form-control" id="board_content"  v-model="board_content" rows="3"></textarea>
@@ -37,57 +20,51 @@
 
 <script>
 import InputForm from './form/InputForm.vue';
+import SelectionForm from './form/SelectionForm.vue';
 import BoardService from '../service/board';
 
 export default {
     name: 'BoardForm',
+    mounted() {
+        this.$store.dispatch('fetchBoardCategories');
+    },
     data() {
         return {
             board_category: '',
             board_title: '',
             board_content: '',
 
-            isBoardTitleValid: false,
-            // 안내 메시지
-            categoryValidCheckMessage: [],
+            isBoardBoardTitleValid: false,
+            isCategoryValid: false,
             // 진행 중
             isProcessing: false
         };
     },
     computed: {
-        isCategoryValid() {
-            return this.categoryValidCheckMessage.length == 0;
-        },
+        getCategoryOptions() {
+            let boardCategories = this.$store.getters.getBoardCategories;
+            let ret = [];
+            for (let index = 0; index < boardCategories.length; index++) {
+                ret.push({
+                    value: boardCategories[index]._id.toString(),
+                    text: boardCategories[index].category_name
+                });
+            }
+            return ret;
+        }
     },
     methods: {
-        // 기수 선택용 옵션
-        getCategoryOptions() {
-            var options = [];
-
-            // 카테고리 가져오기!!!!!!!!!!!! 필요
-            options[0] = {
-                text: '공지사항',
-                value: 1
-            };
-
-            return options;
-        },
-        categoryValidCheck() {
-            this.categoryValidCheckMessage = [];
-
-            if (this.board_category === '') {
-                this.categoryValidCheckMessage.push('카테고리를 선택하세요.');
-            }
-        },
         onBoardTitleChange(value, valid) {
             this.board_title = value;
             this.isBoardTitleValid = valid;
         },
+        onBoardCategoryChange(value, valid) {
+            this.board_category = value;
+            this.isBoardCategoryValid = valid;
+        },
         onSubmit() {
             // 전체 확인
-            this.categoryValidCheck();
-
-            if (!(this.isBoardTitleValid && this.isCategoryValid)) {
+            if (!(this.isBoardTitleValid && this.isBoardCategoryValid)) {
                 this.$notify({
                     title: '올바르지 않은 입력이 있습니다.',
                     text: '다시 확인 후 입력해주세요.',
@@ -124,7 +101,8 @@ export default {
         }
     },
     components: {
-        InputForm
+        InputForm,
+        SelectionForm
     }
 };
 </script>

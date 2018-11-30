@@ -1,11 +1,11 @@
 <template>
 <div class="form-group mb-3">
-    <label for="id">{{ name }}</label>
+    <label :for="name">{{ name }}</label>
     <input type="text"  v-on:input="inputData=$event.target.value"
         :class="isInit?'form-control':isValid?'is-valid':'is-invalid'" @keyup="onInput()"
-        id="id" class="form-control" :placeholder="nameWithJosa + ' 입력하세요'" autocomplete="off"
-        aria-describedby="helpBlock" required />
-    <div v-show="!isValid" id="helpBlock" class="invalid-feedback form-text text-danger">
+        :id="name" class="form-control" :placeholder="nameWithJosa + ' 입력하세요'" autocomplete="off"
+        :aria-describedby="name + 'helpBlock'" required />
+    <div v-show="!isValid" :id="name + 'helpBlock'" class="invalid-feedback form-text text-danger">
         <ul>
             <li v-for="(message, index) in validCheckMessage" v-bind:key="index">
                 {{ message }}

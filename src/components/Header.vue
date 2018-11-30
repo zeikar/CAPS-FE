@@ -51,8 +51,11 @@ export default {
             // LOGOUT 변이 실행 후 리다이렉트 
             this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'));
         },
-        onClickLogin() {            
-            this.$store.dispatch('setNextDestination', this.$router.history.current.path).then(() => this.$router.push('/login'));
+        onClickLogin() {
+            // 특정 화면에서 로그인 누르는 것은 무시
+            if(this.$router.history.current.path != '/login' && this.$router.history.current.path != '/noauth') {
+                this.$store.dispatch('setNextDestination', this.$router.history.current.path).then(() => this.$router.push('/login'));
+            }
         }
     }
 };

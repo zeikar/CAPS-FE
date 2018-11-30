@@ -37,7 +37,9 @@ export default new Vuex.Store({
         // 앨범
         album: null,
         // 로그인 후 넘어갈 url
-        nextDestination: '/'
+        nextDestination: '/',
+        // 카테고리
+        boardCategories: []
     },
     getters: {
         getBoards(state) {
@@ -60,6 +62,9 @@ export default new Vuex.Store({
         },
         getNextDestination(state) {
             return state.nextDestination;
+        },
+        getBoardCategories(state) {
+            return state.boardCategories;
         }
     },
     mutations: {
@@ -91,6 +96,9 @@ export default new Vuex.Store({
         },
         setNextDestination(state, url) {
             state.nextDestination = url;
+        },
+        fetchBoardCategories(state, boardCategoryData) {
+            state.boardCategories = boardCategoryData;
         }
     },
     actions: {
@@ -146,6 +154,15 @@ export default new Vuex.Store({
         },
         setNextDestination(state, url) {
             state.commit('setNextDestination', url);
-        }
+        },
+        fetchBoardCategories(state) {
+            axios.get(RestAPI.SERVER_DOMAIN + 'boards/categories')
+                .then(response => {
+                    state.commit('fetchBoardCategories', response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
     }
 });

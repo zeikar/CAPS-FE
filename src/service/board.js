@@ -15,6 +15,7 @@ export default {
                 });
         });
     },
+    // 게시글 삭제
     deleteBoard(boardId) {
         return new Promise(function (resolve, reject) {
             axios.delete(RestAPI.SERVER_DOMAIN + 'boards/' + boardId)
@@ -25,6 +26,5 @@ export default {
                     reject(error);
                 });
         });
-
     }
 };
