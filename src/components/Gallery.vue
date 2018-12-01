@@ -16,7 +16,7 @@
         </div>
     </div>
     <AlbumView v-if="chosenAlbumId!=''&&showModal" v-bind:albumId="chosenAlbumId" v-on:closeModal="closeModal" />
-    <router-link :to="'/gallery/upload'" class="btn btn-outline-primary">앨범 생성</router-link>
+    <router-link v-if="isLogined()" :to="'/gallery/upload'" class="btn btn-outline-primary">앨범 생성</router-link>
 </div>
 </template>
 
@@ -36,13 +36,16 @@ export default {
         this.$store.dispatch('fetchGallery');
     },
     methods: {
+        isLogined() {
+            return this.$store.getters.isLogined;
+        },
         getPhotoUrl(photoId) {
             return RestAPI.GET_PHOTO + photoId;
         },
         albumClick(albumId) {
             let nextDestination = '/gallery/';
             // 로그인 체크
-            if (!this.$store.getters.isLogined) {
+            if (!this.isLogined()) {
                 this.$notify({
                     title: '로그인 필요',
                     text: '앨범을 보시려면 로그인이 필요합니다. 로그인해 주세요.',

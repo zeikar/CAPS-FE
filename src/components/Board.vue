@@ -11,6 +11,12 @@
             </tr>
         </thead>
         <tbody>
+            <tr v-if="isFetching">
+                <td colspan="5" class="text-center">데이터를 불러오는 중입니다.</td>
+            </tr>
+            <tr v-else-if="boards.length==0">
+                <td colspan="5" class="text-center">해당하는 게시글이 없습니다.</td>
+            </tr>
             <tr v-for="(board, index) in boards" v-bind:key="board._id">
                 <td>{{ boards.length - index }}</td>
                 <td>
@@ -26,7 +32,7 @@
             </tr>
         </tbody>
     </table>
-    <router-link :to="'/board/write'" class="btn btn-outline-primary">글쓰기</router-link>
+    <router-link v-if="isLogined()" :to="'/board/write'" class="btn btn-outline-primary">글쓰기</router-link>
 </div>
 </template>
 
@@ -36,18 +42,32 @@ export default {
     mounted() {
         this.fetchBoards();
     },
+    data() {
+        return {
+            isFetching: true
+        };
+    },
     methods: {
+        isLogined() {
+            return this.$store.getters.isLogined;
+        },
         fetchBoards() {
             if (this.$route.query.category) {
-                this.$store.dispatch('fetchBoardsCategory', this.$route.query.category);
+                this.$store.dispatch('fetchBoardsCategory', this.$route.query.category)
+                    .then(() => {
+                        this.isFetching = false;
+                    });
             } else {
-                this.$store.dispatch('fetchBoards');
+                this.$store.dispatch('fetchBoards')
+                    .then(() => {
+                        this.isFetching = false;
+                    });
             }
         },
         boardClick(boardId) {
             let nextDestination = '/board/view/' + boardId;
             // 로그인 체크
-            if (!this.$store.getters.isLogined) {
+            if (!this.isLogined()) {
                 this.$notify({
                     title: '로그인 필요',
                     text: '게시글을 보시려면 로그인이 필요합니다. 로그인해 주세요.',
