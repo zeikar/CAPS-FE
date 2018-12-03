@@ -22,7 +22,7 @@
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
-                <td>
+                <td @click="fetchBoards()">
                     <router-link :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
                 </td>
                 <td>
@@ -47,11 +47,17 @@ export default {
             isFetching: true
         };
     },
+    watch: {
+        '$route.query.category'() {
+            this.fetchBoards();
+        }
+    },
     methods: {
         isLogined() {
             return this.$store.getters.isLogined;
         },
         fetchBoards() {
+            this.isFetching = true;
             if (this.$route.query.category) {
                 this.$store.dispatch('fetchBoardsCategory', this.$route.query.category)
                     .then(() => {
