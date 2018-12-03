@@ -25,8 +25,8 @@
                                 <li data-target="#carouselExampleIndicators" :data-slide-to="index" :class="index==0?'active':''" v-for="(photo, index) in album.photos" v-bind:key="photo._id">></li>
                             </ol>
                             <div class="carousel-inner"  style="background-color:black">
-                                <div class="carousel-item" :class="index==0?'active':''" v-for="(photo, index) in album.photos" v-bind:key="photo._id">
-                                    <img class="img-fluid mx-auto d-block" :src="getPhotoUrl(photo._id)" :alt="photo.photo_name">
+                                <div class="carousel-item aspect" :class="index==0?'active':''" v-for="(photo, index) in album.photos" v-bind:key="photo._id">
+                                    <img class="img-respective mx-auto d-block" :src="getPhotoUrl(photo._id)" :alt="photo.photo_name">
                                 </div>    
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -82,6 +82,21 @@ export default {
 </script>
 
 <style>
+.aspect {
+    height: 0;
+    padding-top: 33.25%;
+}
+
+.img-respective {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    max-height: 100%;
+}
+
 .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -109,7 +124,6 @@ export default {
     transition: all .3s ease;
     font-family: Helvetica, Arial, sans-serif;
     max-height: 90%;
-    overflow-y: scroll;
 }
 
 .modal-header h3 {
