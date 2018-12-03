@@ -1,7 +1,7 @@
 <template>
 <transition name="modal" v-if="album && album._id == albumId">
     <div class="modal-mask">
-        <div class="modal-wrapper">
+        <div class="modal-wrapper" @click.self="closeButtonClicked()">
             <div class="modal-container">
 
                 <div class="modal-header row">
