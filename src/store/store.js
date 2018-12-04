@@ -103,7 +103,7 @@ export default new Vuex.Store({
     },
     actions: {
         fetchBoards(state) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'boards')
+            return axios.get(RestAPI.SERVER_DOMAIN + 'boards')
                 .then(response => {
                     state.commit('fetchBoards', response.data);
                 })
@@ -112,7 +112,7 @@ export default new Vuex.Store({
                 });
         },
         fetchBoardsCategory(state, category) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'boards/category/' + category)
+            return axios.get(RestAPI.SERVER_DOMAIN + 'boards/category/' + category)
                 .then(response => {
                     state.commit('fetchBoards', response.data);
                 })
@@ -121,7 +121,7 @@ export default new Vuex.Store({
                 });
         },
         fetchBoard(state, boardId) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'boards/view/' + boardId)
+            return axios.get(RestAPI.SERVER_DOMAIN + 'boards/view/' + boardId)
                 .then(response => {
                     state.commit('fetchBoard', response.data);
                 })
@@ -130,7 +130,7 @@ export default new Vuex.Store({
                 });
         },
         fetchGallery(state) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'gallery')
+            return axios.get(RestAPI.SERVER_DOMAIN + 'gallery')
                 .then(response => {
                     state.commit('fetchGallery', response.data);
                 })
@@ -139,7 +139,7 @@ export default new Vuex.Store({
                 });
         },
         fetchAlbum(state, albumId) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'gallery/view/' + albumId)
+            return axios.get(RestAPI.SERVER_DOMAIN + 'gallery/view/' + albumId)
                 .then(response => {
                     state.commit('fetchAlbum', response.data);
                 })
@@ -165,7 +165,7 @@ export default new Vuex.Store({
             state.commit('setNextDestination', url);
         },
         fetchBoardCategories(state) {
-            axios.get(RestAPI.SERVER_DOMAIN + 'boards/categories')
+            return axios.get(RestAPI.SERVER_DOMAIN + 'boards/categories')
                 .then(response => {
                     state.commit('fetchBoardCategories', response.data);
                 })
