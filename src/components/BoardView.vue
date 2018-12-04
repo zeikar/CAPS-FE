@@ -25,15 +25,17 @@
             </div>
             <div class="col-sm-8"></div>
             <div class="col-sm-2">
-                <button class="btn btn-danger btn-block" role="button" @click="deleteBoard()">글 삭제</button>
+                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#confirmModal">글 삭제</button>
             </div>
         </div>
     </div>
 
+    <ConfirmModal v-bind:modalHead="'삭제 확인'" v-bind:modalBody="'정말 게시글을 삭제합니까?'" v-on:confirm="deleteBoard()" name="앨범 제목" />
 </div>
 </template>
 
 <script>
+import ConfirmModal from './common/ConfirmModal.vue';
 import BoardService from '../service/board';
 
 export default {
@@ -62,6 +64,9 @@ export default {
         board() {
             return this.$store.getters.getBoard;
         }
+    },
+    components: {
+        ConfirmModal
     }
 };
 </script>
