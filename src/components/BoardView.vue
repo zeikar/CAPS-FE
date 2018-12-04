@@ -36,7 +36,7 @@
 
     <BoardForm v-else v-bind:currentBoardId="boardId" v-bind:initialBoardTitle="board.board_title"
         v-bind:initialBoardCategory="board.board_category.toString()" v-bind:initialBoardContent="board.board_content" 
-        v-on:finished="isModifying=false" />
+        v-on:finished="finishModifyBoard" />
     <ConfirmModal modalHead="삭제 확인" modalBody="정말 게시글을 삭제합니까?" v-on:confirm="deleteBoard()" />
 </div>
 </template>
@@ -60,6 +60,10 @@ export default {
     methods: {
         modifyBoard() {
             this.isModifying = true;
+        },
+        finishModifyBoard() {
+            this.isModifying = false;
+            this.$store.dispatch('fetchBoard', this.boardId);
         },
         deleteBoard() {
             BoardService.deleteBoard(this.boardId)

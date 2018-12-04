@@ -22,8 +22,8 @@
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
-                <td @click="fetchBoards()">
-                    <router-link :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
+                <td>
+                    <router-link  @click="fetchBoards()" :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
                 </td>
                 <td>
                     <router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link>
