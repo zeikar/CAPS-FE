@@ -15,6 +15,18 @@ export default {
                 });
         });
     },
+    // 게시글 수정
+    modifyBoard(boardId, boardData) {
+        return new Promise(function (resolve, reject) {
+            axios.patch(RestAPI.SERVER_DOMAIN + 'boards/' + boardId, boardData)
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
     // 게시글 삭제
     deleteBoard(boardId) {
         return new Promise(function (resolve, reject) {

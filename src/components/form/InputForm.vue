@@ -1,7 +1,7 @@
 <template>
 <div class="form-group mb-3">
     <label :for="name">{{ name }}</label>
-    <input type="text"  v-on:input="inputData=$event.target.value"
+    <input type="text" v-model="inputData" v-on:input="inputData=$event.target.value"
         :class="isInit?'form-control':isValid?'is-valid':'is-invalid'" @keyup="onInput()"
         :id="name" class="form-control" :placeholder="nameWithJosa + ' 입력하세요'" autocomplete="off"
         :aria-describedby="name + 'helpBlock'" required />
