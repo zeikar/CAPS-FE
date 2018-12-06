@@ -103,5 +103,6 @@ export default {
 
 .post-content {
     border-bottom: 1px solid #cccccc;
+    padding: 40px 0;
 }
 </style>
