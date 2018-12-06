@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="getUserId && user">
         <div class="container">
             <div class="row my-2">
                 <div class="col-lg-8 order-lg-2">
@@ -113,75 +113,7 @@
                             </table>
                         </div>
                         <div class="tab-pane" id="edit">
-                            <form role="form">
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" :value="user.user_name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="Bishop">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="email" :value="user.user_email">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" type="text" value="" placeholder="City">
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input class="form-control" type="text" value="" placeholder="State">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                    <div class="col-lg-9">
-                                        <select id="user_time_zone" class="form-control" size="0">
-                                            <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                            <option value="Alaska">(GMT-09:00) Alaska</option>
-                                            <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                            <option value="Arizona">(GMT-07:00) Arizona</option>
-                                            <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                            <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                            <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                            <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="text" value="janeuser">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                    <div class="col-lg-9">
-                                        <input class="form-control" type="password" value="11111122333">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-3 col-form-label form-control-label"></label>
-                                    <div class="col-lg-9">
-                                        <input type="reset" class="btn btn-secondary" value="Cancel">
-                                        <input type="button" class="btn btn-primary" value="Save Changes">
-                                    </div>
-                                </div>
-                            </form>
+                            <ProfileForm v-bind:initialUserComment="user.user_comment" />
                         </div>
                     </div>
                 </div>
@@ -199,16 +131,17 @@
 </template>
 
 <script>
+import ProfileForm from './ProfileForm.vue';
 import UserService from '../service/user';
 
 export default {
     data() {
         return {
-            user: {}
+            user: null
         };
     },
     props: ['userId'],
-     computed: {        
+    computed: {        
         getUserId() {
             return this.$store.getters.getUserData.user_id;
         },
@@ -216,14 +149,17 @@ export default {
     mounted() {
         // 사용자 가져옴
         if(this.userId) {
-            UserService.getUserData(this.userId).then(data => {
-                this.user = data;
+            UserService.getUserData(this.userId).then(res => {
+                this.user = res.data;
             });
         } else {
-            UserService.getUserData(this.getUserId).then(data => {
-                this.user = data;
+            UserService.getUserData(this.getUserId).then(res => {
+                this.user = res.data;
             });
         }
+    },
+    components: {
+        ProfileForm
     }
 };
 </script>

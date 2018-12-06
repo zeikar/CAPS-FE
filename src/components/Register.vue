@@ -164,8 +164,8 @@ export default {
                 this.idValidCheckMessage.push('아이디는 영문 소문자, 숫자로만 구성되어야 합니다.');
             }
             // 존재하는 아이디 체크
-            UserService.checkUserId(this.user_id).then(data => {
-                if (data.message == 'Found') {
+            UserService.checkUserId(this.user_id).then(res => {
+                if (res.data.message == 'Found') {
                     this.idValidCheckMessage = [];
                     this.idValidCheckMessage.push('이미 존재하는 아이디입니다.');
                 }
@@ -270,8 +270,7 @@ export default {
                     });
                     this.$router.push('/login');
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(() => {
                     this.$notify({
                         title: '회원 가입 실패!',
                         text: '회원 가입에 실패하였습니다. 입력한 정보를 다시 확인해 주세요.',

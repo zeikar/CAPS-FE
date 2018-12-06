@@ -105,4 +105,8 @@ export default {
     border-bottom: 1px solid #cccccc;
     padding: 40px 0;
 }
+
+.post-buttons {
+    padding-top: 20px;
+}
 </style>
