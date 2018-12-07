@@ -17,7 +17,7 @@
             <tr v-else-if="boards.length==0">
                 <td colspan="5" class="text-center">해당하는 게시글이 없습니다.</td>
             </tr>
-            <tr v-for="(board, index) in boards" v-bind:key="board._id">
+            <tr else v-for="(board, index) in boards" v-bind:key="board._id">
                 <td>{{ boards.length - index }}</td>
                 <td>
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
@@ -26,7 +26,7 @@
                     <router-link  @click="fetchBoards()" :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
                 </td>
                 <td>
-                    <router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link>
+                    <a href="javascript:void(0)" @click="profileClick(board.user.user_id)">{{ board.user.user_name }}</a>
                 </td>
                 <td>{{ board.updated_at }}</td>
             </tr>
@@ -77,6 +77,21 @@ export default {
                 this.$notify({
                     title: '로그인 필요',
                     text: '게시글을 보시려면 로그인이 필요합니다. 로그인해 주세요.',
+                    type: 'warn'
+                });
+                this.$store.dispatch('setNextDestination', nextDestination).then(() => this.$router.push('/login'));
+
+                return;
+            }
+            this.$router.push(nextDestination);
+        },
+        profileClick(userId) {
+            let nextDestination = '/profile/' + userId;
+            // 로그인 체크
+            if (!this.isLogined()) {
+                this.$notify({
+                    title: '로그인 필요',
+                    text: '프로필을 보시려면 로그인이 필요합니다. 로그인해 주세요.',
                     type: 'warn'
                 });
                 this.$store.dispatch('setNextDestination', nextDestination).then(() => this.$router.push('/login'));
