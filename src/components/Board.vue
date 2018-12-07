@@ -23,7 +23,7 @@
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
                 <td>
-                    <router-link  @click="fetchBoards()" :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
+                    <router-link @click="fetchBoards()" :to="'/board?category=' + board.category._id">{{ board.category.category_name }}</router-link>
                 </td>
                 <td>
                     <router-link :to="'/profile/' + board.user.user_id">{{ board.user.user_name }}</router-link>
@@ -58,17 +58,13 @@ export default {
         },
         fetchBoards() {
             this.isFetching = true;
-            if (this.$route.query.category) {
-                this.$store.dispatch('fetchBoardsCategory', this.$route.query.category)
-                    .then(() => {
-                        this.isFetching = false;
-                    });
-            } else {
-                this.$store.dispatch('fetchBoards')
-                    .then(() => {
-                        this.isFetching = false;
-                    });
-            }
+            this.$store.dispatch('fetchBoards', {
+                category: this.$route.query.category,
+                search: this.$route.query.search,
+                page: this.$route.query.page
+            }).then(() => {
+                this.isFetching = false;
+            });
         },
         boardClick(boardId) {
             let nextDestination = '/board/view/' + boardId;
