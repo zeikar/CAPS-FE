@@ -28,8 +28,6 @@ export default new Vuex.Store({
     state: {
         // 로그인 정보
         accessToken: axios.defaults.headers.common['Access-Token'],
-        // 게시판 정보
-        boards: [],
         // 현재 게시글 정보
         board: null,
         // 갤러리
@@ -42,9 +40,6 @@ export default new Vuex.Store({
         boardCategories: []
     },
     getters: {
-        getBoards(state) {
-            return state.boards;
-        },
         getBoard(state) {
             return state.board;
         },
@@ -68,9 +63,6 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        fetchBoards(state, boardsData) {
-            state.boards = boardsData;
-        },
         fetchBoard(state, boardData) {
             state.board = boardData;
         },
@@ -102,20 +94,6 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        fetchBoards(state, query) {
-            return axios.get(RestAPI.SERVER_DOMAIN + 'boards', {
-                    params: {
-                        category: query.category,
-                        search: query.search,
-                        page: query.page
-                    }
-                }).then(response => {
-                    state.commit('fetchBoards', response.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
         fetchBoard(state, boardId) {
             return axios.get(RestAPI.SERVER_DOMAIN + 'boards/view/' + boardId)
                 .then(response => {

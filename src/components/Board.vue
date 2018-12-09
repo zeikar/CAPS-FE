@@ -27,7 +27,7 @@
                     <a href="javascript:void(0)" @click="boardClick(board._id)">{{ board.board_title }}</a>
                 </td>
                 <td>
-                    <a href="javascript:void(0)" @click="categoryChange(board.category._id)">{{ board.category.category_name }}</a>
+                    <a href="javascript:void(0)" @click="categoryClick(board.category._id)">{{ board.category.category_name }}</a>
                 </td>
                 <td>
                     <a href="javascript:void(0)" @click="profileClick(board.user.user_id)">{{ board.user.user_name }}</a>
@@ -40,9 +40,9 @@
         <router-link v-if="isLogined()" :to="'/board/write'" class="btn btn-outline-primary">글쓰기</router-link>
         <div class="input-group inline-input-group mb-3 float-right">
             <input type="search" class="form-control" placeholder="검색"
-                @keyup.enter="fetchBoards()" v-model="searchQuery"/>
+                @keyup.enter="searchClick()" v-model="searchQuery"/>
             <div class="input-group-append">
-                <button class="btn btn-success" @click="fetchBoards()">검색</button>
+                <button class="btn btn-success" @click="searchClick()">검색</button>
             </div>
         </div>
     </div>
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import BoardService from '../service/board';
+
 export default {
     name: 'Board',
     mounted() {
@@ -57,26 +59,46 @@ export default {
     },
     data() {
         return {
+            boards: [],
             isFetching: true,
             searchQuery: '',
-            categoryQuery: ''
+            categoryQuery: '',
+            pageQuery: ''
         };
     },
     methods: {
         isLogined() {
             return this.$store.getters.isLogined;
         },
-        categoryChange(categoryId) {
+        // 쿼리 생성
+        generateQuery() {
+            // 쿼리 생성
+            this.$router.push({
+                query: {
+                    category: this.categoryQuery,
+                    search: this.searchQuery,
+                    page: this.pageQuery
+                }
+            });
+        },
+        categoryClick(categoryId) {
             this.categoryQuery = categoryId;
+            this.generateQuery();
+            this.fetchBoards();
+        },
+        searchClick() {
+            this.generateQuery();
             this.fetchBoards();
         },
         fetchBoards() {
             this.isFetching = true;
-            this.$store.dispatch('fetchBoards', {
-                category: this.categoryQuery,
-                search: this.searchQuery,
+            // 가져오기
+            BoardService.getBoards({
+                category: this.$route.query.category,
+                search: this.$route.query.search,
                 page: this.$route.query.page
-            }).then(() => {
+            }).then((response) => {
+                this.boards = response.data;
                 this.isFetching = false;
             });
         },
@@ -111,9 +133,9 @@ export default {
             this.$router.push(nextDestination);
         }
     },
-    computed: {
-        boards() {
-            return this.$store.getters.getBoards;
+    watch: {
+        '$route.query'() {
+            this.fetchBoards();
         }
     }
 };
