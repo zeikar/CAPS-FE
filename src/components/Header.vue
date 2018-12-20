@@ -19,6 +19,14 @@
                 </li>
                 <!-- Dropdown -->
                 <li v-if="isLogined" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbardrop" data-toggle="dropdown">유틸</a>
+                    <div class="dropdown-menu">
+                        <router-link to="/wiki" class="nav-link">CAPS 위키</router-link>
+                        <a href="http://caps.gq:3000" class="nav-link">CAPS hub</a>
+                    </div>
+                </li>
+                <!-- Dropdown -->
+                <li v-if="isLogined" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbardrop" data-toggle="dropdown">안녕하세요 {{ getUserName }}님!</a>
                     <div class="dropdown-menu">
                         <router-link to="/notification" class="nav-link">알림</router-link>
